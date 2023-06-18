@@ -1,0 +1,102 @@
+<div class="form-container">
+  <h2>Thêm công việc mới</h2>
+  <form (ngSubmit)="addTask()" #taskForm="ngForm">
+    <div class="form-field">
+      <label for="taskName">Tên công việc:</label>
+      <input
+        type="text"
+        id="taskName"
+        name="taskName"
+        [(ngModel)]="newTask.name"
+        required
+        pattern="[a-zA-Z ]*"
+      />
+      <div
+        *ngIf="
+          !isSubmitted &&
+          taskForm.controls['taskName'].invalid &&
+          (taskForm.controls['taskName'].dirty ||
+            taskForm.controls['taskName'].touched)
+        "
+        class="error-message"
+      >
+        <div *ngIf="taskForm.controls['taskName'].hasError('required')">
+          Tên công việc là bắt buộc.
+        </div>
+        <div *ngIf="taskForm.controls['taskName'].hasError('pattern')">
+          Tên công việc chỉ chứa các ký tự từ A-Z hoặc a-z.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="taskContent">Nội dung:</label>
+      <textarea
+        id="taskContent"
+        name="taskContent"
+        [(ngModel)]="newTask.content"
+        required
+      ></textarea>
+      <div
+        *ngIf="
+          !isSubmitted &&
+          taskForm.controls['taskContent'].invalid &&
+          (taskForm.controls['taskContent'].dirty ||
+            taskForm.controls['taskContent'].touched)
+        "
+      >
+        <div
+          *ngIf="taskForm.controls['taskContent'].hasError('required')"
+          class="error-message"
+        >
+          Nội dung công việc là bắt buộc.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="taskCategory">Danh mục công việc:</label>
+      <select
+        id="taskCategory"
+        name="taskCategory"
+        [(ngModel)]="newTask.category"
+        required
+      >
+        <option value="" disabled selected>Chọn danh mục</option>
+        <option value="Category 1">Quan trọng</option>
+        <option value="Category 2">Công việc</option>
+        <option value="Category 3">Cá nhân</option>
+      </select>
+      <div
+        *ngIf="
+          !isSubmitted &&
+          taskForm.controls['taskCategory'].invalid &&
+          (taskForm.controls['taskCategory'].dirty ||
+            taskForm.controls['taskCategory'].touched)
+        "
+        class="error-message"
+      >
+        <div *ngIf="taskForm.controls['taskCategory'].hasError('required')">
+          Một danh mục phải được chọn.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="taskCompleted">Công việc hoàn thành:</label>
+      <input
+        type="checkbox"
+        id="taskCompleted"
+        name="taskCompleted"
+        [(ngModel)]="newTask.completed"
+      />
+    </div>
+
+    <div class="submit-button">
+      <button type="submit" [disabled]="taskForm.invalid">
+        Thêm công việc
+      </button>
+      <button type="button" (click)="resetForm()">Reset</button>
+    </div>
+  </form>
+</div>

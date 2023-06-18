@@ -1,0 +1,42 @@
+<div>
+  <h2>Danh sách công việc</h2>
+
+  <div>
+    <label for="searchTerm">Tìm kiếm:</label>
+    <input
+      type="text"
+      id="searchTerm"
+      name="searchTerm"
+      [(ngModel)]="searchTerm"
+      (input)="filterTasks()"
+      placeholder="Tìm kiếm theo công việc"
+    />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Công việc</th>
+        <th>Nội dung</th>
+        <th>Thời gian</th>
+        <th>Danh mục</th>
+        <th>Xoá</th>
+        <th>Hoàn thành</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of filteredTasks">
+        <td [ngClass]="{ completed: task.completed }">{{ task.name }}</td>
+        <td>{{ task.content }}</td>
+        <td>{{ task.id }}</td>
+        <td>{{ task.category }}</td>
+        <td>
+          <button class="delete-button" (click)="deleteTask(task)">Xoá</button>
+        </td>
+        <td class="checkbox">
+          <input type="checkbox" [(ngModel)]="task.completed" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
